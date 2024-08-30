@@ -1,0 +1,48 @@
+<button class="toggle-menu" (click)="toggleMenu()" [ngClass]="{'open-button': isMenuOpen, 'close-button': !isMenuOpen}">
+  {{ isMenuOpen ? '←' : '→' }}
+</button>
+
+<aside class="sidebar" [class.open]="isMenuOpen">
+  <h2>Menu</h2>
+  <ul>
+    <li>
+      <a href="#" (click)="openModal($event)">
+        <i class="bi bi-columns"></i> Status
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<main class="content">
+  <section class="status" *ngFor="let status of statuses">
+    <header class="status-header">
+      <h2 (mouseover)="showDescription(status.description)" (mouseleave)="hideDescription()">
+        {{ status.title }}
+      </h2>
+      <div *ngIf="hoveredDescription === status.description" class="tooltip">
+        {{ status.description }}
+      </div>
+      <div class="dropdown">
+        <i class="bi bi-three-dots" (click)="toggleStatusMenu(status.id)"></i>
+        <div *ngIf="activeStatusMenu === status.id" class="dropdown-menu">
+          <a class="dropdown-item" href="#" (click)="editStatus(status)">Edit</a>
+          <a class="dropdown-item" href="#" (click)="deleteStatus(status)">Delete</a>
+        </div>
+      </div>
+    </header>
+    <ul>
+      <li *ngFor="let task of getTasksByStatus(status.title)">
+        {{ task.title }}
+        <button (click)="moveTask(task)">Complete</button>
+        <button (click)="deleteTask(task)">Delete</button>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <a>INEO Task Management System</a>
+  <div class="sub-footer">
+    <a>Developed by: <a href="https://github.com/fabio-daros">Fabio Daros</a></a>
+  </div>
+</footer>

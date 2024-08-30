@@ -1,0 +1,22 @@
+.task-item {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .task-item h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .task-item p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .task-item span {
+    font-size: 12px;
+    color: #888;
+  }
+  

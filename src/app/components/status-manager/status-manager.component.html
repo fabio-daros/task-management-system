@@ -1,0 +1,20 @@
+<div id="statusModal" class="modal">
+    <div class="modal-content">
+        <form class="mb-4" (ngSubmit)="onSubmit()">
+            <h1>Status:</h1>
+            <h2>Register project status to create columns.</h2>
+
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" [(ngModel)]="newStatus.title" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" [(ngModel)]="newStatus.description"></textarea>
+
+            <div class="button w-button">
+                <button type="submit">
+                    <i class="bi bi-save"></i> Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
