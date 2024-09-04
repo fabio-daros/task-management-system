@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { TaskListComponent } from "./components/task-list/task-list.component";
 import { StatusManagerComponent } from './components/status-manager/status-manager.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TaskListComponent, StatusManagerComponent, TaskItemComponent],
+  imports: [RouterOutlet, TaskListComponent, StatusManagerComponent, TaskItemComponent, DashboardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

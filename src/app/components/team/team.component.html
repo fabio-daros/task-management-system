@@ -1,0 +1,47 @@
+<div class="team-form-container">
+  <h1>Team Member:</h1>
+  <h2>Manage team members.</h2>
+
+  <form (ngSubmit)="onSubmit(teamForm)" #teamForm="ngForm">
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="newTeamMember.name" required aria-required="true"
+        aria-label="Enter team member name" placeholder="Enter member name" required />
+    </div>
+
+    <div class="footer">
+      <button type="submit"><i class="bi bi-save"></i> Save</button>
+      <button type="button" (click)="openLocateModal()"><i class="bi bi-search"></i> Locate</button>
+      <button *ngIf="isMemberSelected" type="button" (click)="deleteTeamMember()"><i class="bi bi-trash"></i> Delete</button>
+    </div>
+  </form>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+<!-- Locate Modal -->
+
+<div *ngIf="showLocateModal" class="modal">
+  <div class="modal-content">
+    <h2>Locate and select to edit or delete a team member:</h2>
+    
+    <label for="teamMember">Name:</label>
+    <select id="teamMember" [(ngModel)]="selectedTeamMemberId">
+      <option *ngFor="let member of teamMembers" [value]="member.id">
+      {{ member.name }}
+      </option>
+    </select>
+    
+    <div class="button-container">
+      <button (click)="selectTeamMember()"><i class="bi bi-check-circle"></i> Select</button>
+      <button (click)="closeLocateModal()"><i class="bi bi-x-circle"></i> Cancel</button>
+    </div>
+    </div>
+  </div>
+</div>

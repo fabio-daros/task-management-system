@@ -1,3 +1,18 @@
+.empty-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.empty-background img {
+    margin-top: 50px;
+    width: 65%; 
+    height: auto;
+    opacity: 0.3;
+    user-select: none;
+}
+
 .sidebar {
     background-color: #51328a;
     padding: 20px;
@@ -6,11 +21,19 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    font-family: "Century Gothic Pro", sans-serif;
     color: white;
     z-index: 1;
     transition: left 0.5s ease-in-out;
     left: -200px;
+}
+
+.sidebar a {
+    cursor: pointer;
+}
+
+.sidebar ~ .content {
+    margin-left: 40px;
+    margin-right: -10px;
 }
 
 .sidebar.open {
@@ -18,7 +41,8 @@
 }
 
 .sidebar.open~.content {
-    margin-left: 260px;
+    margin-left: 230px;
+    margin-right: -10px;
 }
 
 .toggle-menu {
@@ -87,43 +111,39 @@ ul a:hover {
 
 .content {
     display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    flex-wrap: nowrap;
+    margin-left: 100px;
     padding: 30px;
-    justify-items: start;
-    margin-left: 30px;
-    font-family: "Century Gothic Pro", sans-serif;
     color: #333;
     transition: margin-left 0.5s ease-in-out;
-    overflow-x: auto;
-    white-space: nowrap;
-    flex: 1;
+    overflow-x: hidden;
 }
 
-.dropdown {
+.dropdown i {
     cursor: pointer;
     display: inline-block;
+    float: right;
 }
 
 .dropdown-menu {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 100%;
+    top: 0;
     right: 0;
-    font-family: "Century Gothic Pro", sans-serif;
     background: white;
     border: 1px solid #ccc;
-    padding: 5px 0;
+    padding: 4px 0;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 .dropdown-menu .dropdown-item {
     padding: 8px 16px;
     text-decoration: none;
-    color: #333;
     display: block;
+    color: #888888;
 }
 
 .dropdown-menu .dropdown-item:hover {
@@ -132,13 +152,36 @@ ul a:hover {
 }
 
 .status {
-    flex: 0 0 auto;
+    flex: 0 1 calc(33.333% - 20px);
     min-width: 200px;
-    margin-right: 10px;
+    margin-right: 20px;
+    margin-bottom: 30px;
     background: #f5f5f5;
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 30vw;
+    display: inline-block;
+    flex-direction: column;
+    transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease;
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        float: none;
+        width: 100%;
+        position: relative;
+        left: 0;
+    }
+
+    .content {
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    .status {
+        min-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
 
 .content h2 {
@@ -181,11 +224,80 @@ ul a:hover {
     position: relative;
 }
 
+.newTask {
+    border: none;
+    border-bottom: 1px solid #51328a;
+    padding: 10px;
+    font-size: 13px;
+    color: #888888;
+    background-color: transparent;
+    outline: none;
+    transition: border-bottom-color 0.3s ease-in-out;
+}
+
+.newTask::placeholder {
+    color: #888888;
+}
+
+.newTask:focus {
+    border-bottom-color: #e82c88;
+}
+
+.status-container {
+    margin-top: 70px; /* Ajuste a margem superior para evitar sobreposição com o campo de pesquisa */
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    transition: all 0.6s ease;
+}
+
+.status-item {
+    padding: 16px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+    background: #fff;
+}
+
+.cdk-drag {
+    cursor: move;
+    color: #888888;
+    font-size: 14px;
+}
+
+.dragging {
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    opacity: 0.8;
+    transform: scale(1.05);
+    font-size: 17px;
+}
+
+.cdk-drop-list-dragging .status {
+    transition: border 0.6s ease;
+    border: 2px solid transparent;
+}
+
+.cdk-drop-list-dragging .status:not(.cdk-drag-placeholder) {
+    transition: transform 0.6s ease;
+}
+
+@media (max-width: 600px) {
+    .status-container {
+        flex-direction: column;
+    }
+
+    .status {
+        flex: 1 0 auto;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
 .tooltip {
     display: inline-block;
     position: absolute;
     left: 0;
-    top: 100%;
+    top: 35px;
     background-color: #888888;
     color: #fff;
     padding: 5px;
@@ -203,6 +315,138 @@ ul a:hover {
     transform: translateY(0);
 }
 
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-left: 8px solid #888888;
+    color: #666666 !important;
+}
+
+.card-content {
+    margin-bottom: 16px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+.edit-task-button,
+.delete-task-button {
+    color: #888888;
+    border: none;
+    padding: 8px 12px;
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.edit-task-button {
+    right: 8px;
+    top: 8px;
+}
+
+.delete-task-button {
+    right: 8px;
+    top: 30px;
+}
+
+.delete-task-button:hover,
+.edit-task-button:hover {
+    color: #e82c88;
+}
+
+.card-owner,
+.card-situation {
+    color: #888888;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.card-owner:hover,
+.card-owner-name:hover,
+.card-situation-status:hover,
+.card-situation:hover {
+    cursor: pointer;
+    color: #e82c88;
+}
+
+.card-owner-name,
+.card-situation-status {
+    color: #888888;
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 11px;
+}
+
+.card-owner-container,
+.card-situation-container {
+    display: flex;
+    align-items: center;
+}
+
+.task-search-container {
+    position: fixed; /* Fixa o campo de pesquisa no topo da página */
+    top: 40px; /* Ajuste a distância do topo conforme necessário */
+    left: 430px; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajuste para garantir centralização */
+    z-index: 2; /* Garante que o campo de pesquisa fique acima dos outros elementos */
+    background-color: #fff; /* Cor de fundo para contraste */
+
+
+}
+
+.task-search-container input {
+    width: 300px; /* Largura do campo de pesquisa */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Borda */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+.search-results {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    position: fixed;
+    top: 40px;
+    left: 47%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 300px;
+}
+
+.search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results li {
+    color: #888888;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.search-results li:hover {
+    background-color: #f0f0f0;
+}
+
 .footer {
     background-color: #f2f2f2;
     padding: 10px;
@@ -212,7 +456,10 @@ ul a:hover {
     width: 100%;
     text-align: center;
     margin-top: 100px;
-    font-family: "Century Gothic Pro", sans-serif;
+}
+
+.footer {
+    height: 40px;
 }
 
 .footer a {

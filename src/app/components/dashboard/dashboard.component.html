@@ -1,0 +1,24 @@
+<body>
+  <div class="dashboard-container">
+    <h1>Dashboard</h1>
+    <div class="statistics-container">
+
+      <div class="chart-container">
+        <h2>Tasks by Status:</h2>
+        <canvas id="tasks-by-status-chart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h2>Tasks by Team Member:</h2>
+        <canvas id="tasks-by-member-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="back-button-container">
+      <a [routerLink]="'/tasks'" routerLinkActive="active" class="back-button">
+        <i class="bi bi-arrow-left"></i> Back to tasks
+      </a>
+    </div>
+  </div>
+
+</body>
