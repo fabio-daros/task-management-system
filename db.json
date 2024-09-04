@@ -1,10 +1,30 @@
 {
-  "status": [
+  "status": [],
+  "task": [],
+  "team": [
     {
-      "id": "1323",
-      "title": "Unstarted",
-      "description": "Unstarted"
+      "id": "3e9b",
+      "name": "John Deere"
+    },
+    {
+      "id": "5t7w",
+      "name": "New Holland"
+    },
+    {
+      "id": "604tu",
+      "name": "Massey Ferguson"
+    },
+    {
+      "id": "1r3ph",
+      "name": "Kubota James"
+    },
+    {
+      "id": "mbbjs",
+      "name": "Cropilots Jersey"
+    },
+    {
+      "id": "53bvp",
+      "name": "John Claas"
     }
-  ],
-  "task": []
+  ]
 }

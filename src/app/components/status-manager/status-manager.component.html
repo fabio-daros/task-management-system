@@ -1,20 +1,32 @@
-<div id="statusModal" class="modal">
-    <div class="modal-content">
-        <form class="mb-4" (ngSubmit)="onSubmit()">
-            <h1>Status:</h1>
-            <h2>Register project status to create columns.</h2>
+<main class="main">
 
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" [(ngModel)]="newStatus.title" required>
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <form class="mb-4" (ngSubmit)="onSubmit()">
+                <h1>Status Manager:</h1>
+                <h2>Register and edit project status to the columns.</h2>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" [(ngModel)]="newStatus.description"></textarea>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" [(ngModel)]="status.title" required
+                    (keydown.enter)="$event.preventDefault(); description.focus()" placeholder="Enter title">
 
-            <div class="button w-button">
-                <button type="submit">
-                    <i class="bi bi-save"></i> Save
-                </button>
-            </div>
-        </form>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" [(ngModel)]="status.description" #description
+                    placeholder="Enter description"></textarea>
+
+                <label for="color">Cards Color:</label>
+                <input type="color" id="color" name="color" [(ngModel)]="status.color" title="Select cards color.">
+
+                <div class="button w-button">
+                    <button type="submit">
+                        <i class="bi bi-save"></i> Save
+                    </button>
+                    <button type="button" (click)="onCancel()">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</main>

@@ -1,6 +1,67 @@
-<div class="task-item">
-    <h3>{{ task.title }}</h3>
-    <p>{{ task.description }}</p>
-    <span>Status: {{ task.status }}</span>
+<main class="main">
+  <div id="taskModal" class="modal">
+    <div *ngIf="statuses.length > 0" class="modal-content" [ngStyle]="{'border-left': '20px solid ' + task.statusColor}">
+      <form class="mb-4" (ngSubmit)="onSubmit()">
+        <div class="task-item">
+          <div class="card-content">
+            <div class="title-container">
+              <i class="bi bi-pencil edit-icon"></i>
+              <input type="text" [(ngModel)]="task.title" name="title" placeholder="Edit title" class="title-input" />
+            </div>
+          </div>
+
+          <div class="label-select-container">
+            <label for="description">
+              <i class="bi bi-file-text"></i> Description:
+            </label>
+            <editor apiKey="i7r9fzr1w5fwa8a0c2ecwxmeoacvz30lumzrcn33zlykujk6" [(ngModel)]="task.description"
+              name="description" [ngModelOptions]="{standalone: true}" [init]="{
+              height: 300,
+              menubar: true,
+              plugins: [
+              'advlist autolink lists link charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+              ],
+              toolbar: 'undo redo | formatselect | bold italic backcolor | \
+              alignleft aligncenter alignright alignjustify | \
+              bullist numlist outdent indent | removeformat | help'
+            }">
+            </editor>
+          </div>
+
+          <div class="label-select-container">
+            <label for="owner">
+              <i class="bi bi-person"></i> Owner:
+            </label>
+            <select id="owner" name="owner" [(ngModel)]="task.teamId">
+              <option *ngFor="let member of teams" [value]="member.id">{{ member.name }}</option>
+            </select>
+          </div>
+
+          <div class="label-select-container">
+            <label for="situation" class="situation bi bi-check-circle"> Situation:</label>
+            <select id="situation" name="situation" [(ngModel)]="task.situation">
+              <option value="awaiting">awaiting</option>
+              <option value="analyzing">analyzing</option>
+              <option value="creating">creating</option>
+              <option value="completed">completed</option>
+            </select>
+          </div>
+
+          <div class="task-item-footer">
+            <button type="submit">
+              <i class="bi bi-save"></i> Save task
+            </button>
+            <button type="button" (click)="closeModal()">
+              <i class="bi bi-x-circle"></i> Cancel edit
+            </button>
+            <button type="button" (click)="deleteTask()">
+              <i class="bi bi-trash"></i> Delete task
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</main>

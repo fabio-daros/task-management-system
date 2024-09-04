@@ -74,6 +74,29 @@ textarea:focus {
     }
 }
 
+input[type="color"] {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    margin: 10px auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    appearance: none;
+    background-color: #888888;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border-radius: 50%;
+    padding: 0;
+}
+
 .button {
     display: flex;
     justify-content: center;
