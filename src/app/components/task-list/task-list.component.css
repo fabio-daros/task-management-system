@@ -23,7 +23,7 @@
     bottom: 0;
     color: white;
     z-index: 1;
-    transition: left 0.5s ease-in-out;
+    transition: left 0.6s ease-in-out;
     left: -200px;
 }
 
@@ -59,7 +59,7 @@
     font-size: 25px;
     border: none;
     color: #fff;
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 6s ease-in-out;
 }
 
 .close-button {
@@ -68,7 +68,7 @@
     left: 0px;
     border: none;
     color: #fff;
-    animation: fadeIn 5s ease-in-out;
+    animation: fadeIn 6s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -115,7 +115,7 @@ ul a:hover {
     margin-left: 100px;
     padding: 30px;
     color: #333;
-    transition: margin-left 0.1s ;
+    transition: margin-left 1.6s ease ;
     overflow-x: hidden;
 }
 
@@ -161,7 +161,7 @@ ul a:hover {
     border-radius: 8px;
     display: inline-block;
     flex-direction: column;
-    transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease;
+    transition: transform 0.6s ease, background-color 0.6s ease, border-color 0.6s ease;
 }
 
 @media (max-width: 600px) {
@@ -273,12 +273,12 @@ ul a:hover {
 }
 
 .cdk-drop-list-dragging .status {
-    transition: border 0.s ease;
+    transition: border 0.6s ease;
     border: 2px solid transparent;
 }
 
 .cdk-drop-list-dragging .status:not(.cdk-drag-placeholder) {
-    transition: transform 0.3s ease;
+    transition: transform 0.6s ease;
 }
 
 @media (max-width: 600px) {
@@ -324,7 +324,7 @@ ul a:hover {
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: box-shadow 0.6s ease, transform 0.6s ease;
     border-left: 8px solid #888888;
     color: #666666 !important;
 }
