@@ -21,7 +21,8 @@ export class TaskItemComponent {
     description: '',
     team: undefined,
     id: '',
-    statusColor: ''
+    statusColor: '',
+    order: 0
   };
   teams: Team[] = [];
   statuses: Status[] = [];

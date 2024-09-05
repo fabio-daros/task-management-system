@@ -28,9 +28,10 @@ export class TaskListComponent implements OnInit {
   activeStatusMenu: string | null = null;
   newTaskTitles: { [statusTitle: string]: string } = {};
   draggingStatusId: string | null = null;
-  searchTerm: string = ''; // Armazena o termo de busca
-  filteredTasks: Task[] = []; // Armazena as tarefas filtradas
-
+  searchTerm: string = '';
+  filteredTasks: Task[] = [];
+  statusIds: string[] = [];
+  
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
@@ -147,7 +148,9 @@ export class TaskListComponent implements OnInit {
   }
 
   getTasksByStatus(statusTitle: string): Task[] {
-    return this.tasks.filter(task => task.status === statusTitle);
+    return this.tasks
+      .filter(task => task.status === statusTitle)
+      .sort((a, b) => a.order - b.order); 
   }
 
   addTask(title: string, status: Status): void {
@@ -161,11 +164,13 @@ export class TaskListComponent implements OnInit {
       team: undefined,
       situation: '',
       description: '',
-      statusColor: ''
+      statusColor: '',
+      order: this.getTasksByStatus(status.title).length
     };
   this.taskService.addTask(newTask).subscribe(task => {
     this.tasks.push(task);
     this.newTaskTitles[status.title] = '';
+    this.updateTaskOrder(this.getTasksByStatus(status.title));
     });
   }
 
@@ -188,28 +193,6 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  onDropTask(event: CdkDragDrop<Task[]>, status: Status): void {
-    const task = event.item.data as Task;
-
-    if (event.previousContainer === event.container) {
-
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-
-      task.status = status.title;
-
-      this.taskService.updateTask(task).subscribe(() => {
-
-        transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
-        );
-      });
-    }
-  }
-
   onSearch(): void {
     if (this.searchTerm.trim()) {
       this.filteredTasks = this.tasks.filter(task =>
@@ -226,6 +209,36 @@ export class TaskListComponent implements OnInit {
       data: { taskId }
     });
   }
+
+  onDropTask(event: CdkDragDrop<Task[]>, status: Status): void {
+    const task = event.item.data as Task;
+    console.log('Tarefa antes da atualização:', task);
+    
+    if (event.previousContainer === event.container) {
+      console.log('Tarefa movida dentro do mesmo status');
+      // Se a tarefa está sendo movida dentro do mesmo status
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateTaskOrder(event.container.data);
+    } else {
+      console.log('Tarefa movida para um novo status');
+      // Se a tarefa está sendo movida para um novo status
+      task.status = status.title; // Atualize o status da tarefa
+      console.log('Tarefa com o novo status:', task);
+      
+      this.taskService.updateTask(task).subscribe(() => {
+        console.log('Tarefa atualizada no backend com sucesso');
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        this.updateTaskOrder(event.container.data); // Atualiza a ordem das tarefas no novo status
+      }, error => {
+        console.error('Erro ao atualizar a tarefa no backend:', error);
+      });
+    }
+  }
   
   onDropStatus(event: CdkDragDrop<Status[]>): void {
   
@@ -240,6 +253,22 @@ export class TaskListComponent implements OnInit {
     });
   
     this.updateStatusOrder();
+  }
+
+  updateTaskOrder(tasks: Task[]): void {
+    tasks.forEach((task, index) => {
+      task.order = index + 1; // Atualiza a ordem baseada na posição no array
+      
+      // Atualiza a tarefa no backend
+      this.taskService.updateTask(task).subscribe(
+        () => {
+          // console.log(`Tarefa ${task.id} atualizada com a nova ordem ${task.order}`);
+        },
+        error => {
+          console.error('Erro ao atualizar a ordem da tarefa:', error);
+        }
+      );
+    });
   }
 
   updateStatusOrder() {

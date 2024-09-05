@@ -1,14 +1,63 @@
 {
-  "status": [],
-  "task": [],
+  "status": [
+    {
+      "id": "93e7",
+      "color": "#ae5ba3",
+      "title": "To Do",
+      "description": "To Do list\n",
+      "order": 0
+    },
+    {
+      "id": "aa26",
+      "color": "#cae01f",
+      "title": "In progress",
+      "description": "In Progress List",
+      "order": 1
+    },
+    {
+      "id": "dd8a",
+      "color": "#30ca12",
+      "title": "Done",
+      "description": "Done List.\n",
+      "order": 2
+    }
+  ],
+  "task": [
+    {
+      "id": "9f6f",
+      "title": "Task 1",
+      "status": "To Do",
+      "teamId": "",
+      "situation": "",
+      "description": "",
+      "statusColor": "",
+      "order": 1
+    },
+    {
+      "id": "45ee",
+      "title": "Task 2",
+      "status": "To Do",
+      "teamId": "",
+      "situation": "",
+      "description": "",
+      "statusColor": "",
+      "order": 2
+    },
+    {
+      "id": "86a6",
+      "title": "Task 3",
+      "status": "To Do",
+      "teamId": "",
+      "situation": "",
+      "description": "",
+      "statusColor": "",
+      "order": 3
+    }
+  ],
   "team": [
     {
       "id": "3e9b",
       "name": "John Deere"
-    },
-    {
-      "id": "5t7w",
-      "name": "New Holland"
     },
     {
       "id": "604tu",
@@ -21,10 +70,6 @@
     {
       "id": "mbbjs",
       "name": "Cropilots Jersey"
-    },
-    {
-      "id": "53bvp",
-      "name": "John Claas"
     }
   ]
 }

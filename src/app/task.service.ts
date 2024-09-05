@@ -4,14 +4,15 @@ import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Task {
-  statusColor: string;
   id: string;
   title: string;
+  statusColor: string;
   description?: string;
   team: any;
   status: string;
   teamId: string;
   situation: string;
+  order: number;
 }
 
 export interface Team {
@@ -64,7 +65,7 @@ export class TaskService {
   }
 
   updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
+    return this.http.put<Task>(`http://localhost:3000/task/${task.id}`, task);
   }
 
   deleteTask(id: string): Observable<void> {
