@@ -1,6 +1,10 @@
 
 html, body {
   background: #51328a !important;
+  margin: 0; /* Remove as margens padrão */
+  padding: 0; /* Remove o padding padrão */
+  height: 100%; /* Garante que o background cubra toda a altura da tela */
+  box-sizing: border-box; /* Garante que o padding e a borda sejam incluídos no tamanho do elemento */
 }
 
 .dashboard-container {
@@ -10,7 +14,7 @@ html, body {
   justify-content: center;
   padding: 20px;
   background-color: #51328a;
-  height: 100vh;
+  height: 100vh; /* Ocupa toda a altura da janela */
   box-sizing: border-box;
 }
 

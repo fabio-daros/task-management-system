@@ -1,32 +1,53 @@
 {
   "status": [
     {
-      "id": "93e7",
-      "color": "#ae5ba3",
+      "id": "c0df",
+      "color": "#3a5e98",
       "title": "To Do",
-      "description": "To Do list\n",
-      "order": 0
-    },
-    {
-      "id": "aa26",
-      "color": "#cae01f",
-      "title": "In progress",
-      "description": "In Progress List",
+      "description": "To Do List.",
       "order": 1
     },
     {
-      "id": "dd8a",
-      "color": "#30ca12",
-      "title": "Done",
-      "description": "Done List.\n",
+      "id": "08b5",
+      "color": "#dbd648",
+      "title": "In Progress",
+      "description": "In Progress List.",
       "order": 2
+    },
+    {
+      "id": "744b",
+      "color": "#2a792c",
+      "title": "Done",
+      "description": "Done List.",
+      "order": 3
+    },
+    {
+      "id": "9ff8",
+      "color": "#b71f1f",
+      "title": "backlog",
+      "description": "Backlog List",
+      "order": 0
+    },
+    {
+      "id": "39d1",
+      "color": "#8b7113",
+      "title": "New Status",
+      "description": "New Status",
+      "order": 4
+    },
+    {
+      "id": "1fbd",
+      "color": "#24abae",
+      "title": "New status 2",
+      "description": "New Status 2",
+      "order": 5
     }
   ],
   "task": [
     {
-      "id": "9f6f",
+      "id": "1415",
       "title": "Task 1",
-      "status": "To Do",
+      "status": "New status 2",
       "teamId": "",
       "situation": "",
       "description": "",
@@ -34,24 +55,34 @@
       "order": 1
     },
     {
-      "id": "45ee",
+      "id": "05a9",
       "title": "Task 2",
-      "status": "To Do",
+      "status": "New Status",
       "teamId": "",
       "situation": "",
       "description": "",
       "statusColor": "",
-      "order": 2
+      "order": 0
     },
     {
-      "id": "86a6",
+      "id": "e38f",
       "title": "Task 3",
+      "status": "Done",
+      "teamId": "",
+      "situation": "",
+      "description": "",
+      "statusColor": "",
+      "order": 1
+    },
+    {
+      "id": "97e6",
+      "title": "Task 4",
       "status": "To Do",
       "teamId": "",
       "situation": "",
       "description": "",
       "statusColor": "",
-      "order": 3
+      "order": 0
     }
   ],
   "team": [

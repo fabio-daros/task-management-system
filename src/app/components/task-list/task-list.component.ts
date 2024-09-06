@@ -27,11 +27,10 @@ export class TaskListComponent implements OnInit {
   hoveredDescription: string | null = null;
   activeStatusMenu: string | null = null;
   newTaskTitles: { [statusTitle: string]: string } = {};
-  draggingStatusId: string | null = null;
   searchTerm: string = '';
   filteredTasks: Task[] = [];
   statusIds: string[] = [];
-  
+
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
@@ -44,7 +43,7 @@ export class TaskListComponent implements OnInit {
     this.loadTasks();
     this.loadTasksAndTeams();
   }
-  
+
   loadTasksAndTeams(): void {
     this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
@@ -88,7 +87,7 @@ export class TaskListComponent implements OnInit {
     event.preventDefault();
     this.dialog.open(TaskItemComponent, {
       width: '500px',
-      data: {taskId}
+      data: { taskId }
     });
   }
 
@@ -118,8 +117,8 @@ export class TaskListComponent implements OnInit {
     const tasksForStatus = this.getTasksByStatus(status.title);
     if (tasksForStatus.length > 0) {
       alert('This status cannot be deleted because there are tasks currently associated with it.');
-      return; 
-  }
+      return;
+    }
 
     const confirmation = confirm('Are you sure you want to delete this status?');
     if (confirmation) {
@@ -150,7 +149,7 @@ export class TaskListComponent implements OnInit {
   getTasksByStatus(statusTitle: string): Task[] {
     return this.tasks
       .filter(task => task.status === statusTitle)
-      .sort((a, b) => a.order - b.order); 
+      .sort((a, b) => a.order - b.order);
   }
 
   addTask(title: string, status: Status): void {
@@ -167,10 +166,10 @@ export class TaskListComponent implements OnInit {
       statusColor: '',
       order: this.getTasksByStatus(status.title).length
     };
-  this.taskService.addTask(newTask).subscribe(task => {
-    this.tasks.push(task);
-    this.newTaskTitles[status.title] = '';
-    this.updateTaskOrder(this.getTasksByStatus(status.title));
+    this.taskService.addTask(newTask).subscribe(task => {
+      this.tasks.push(task);
+      this.newTaskTitles[status.title] = '';
+      this.updateTaskOrder(this.getTasksByStatus(status.title));
     });
   }
 
@@ -187,7 +186,7 @@ export class TaskListComponent implements OnInit {
   deleteTask(task: Task): void {
     const confirmation = confirm('Are you sure you want to delete this task?');
     if (confirmation) {
-      this.taskService.deleteTask(task.id).subscribe(() => { 
+      this.taskService.deleteTask(task.id).subscribe(() => {
         this.tasks = this.tasks.filter(t => t.id !== task.id);
       });
     }
@@ -212,57 +211,45 @@ export class TaskListComponent implements OnInit {
 
   onDropTask(event: CdkDragDrop<Task[]>, status: Status): void {
     const task = event.item.data as Task;
-    console.log('Tarefa antes da atualização:', task);
-    
+
+    // Verifica se a tarefa foi movida dentro do mesmo status ou para um novo status
     if (event.previousContainer === event.container) {
-      console.log('Tarefa movida dentro do mesmo status');
-      // Se a tarefa está sendo movida dentro do mesmo status
+      // Tarefa movida dentro do mesmo status
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updateTaskOrder(event.container.data);
+      this.updateTaskOrder(event.container.data); // Atualiza a ordem das tarefas no status
     } else {
-      console.log('Tarefa movida para um novo status');
-      // Se a tarefa está sendo movida para um novo status
-      task.status = status.title; // Atualize o status da tarefa
-      console.log('Tarefa com o novo status:', task);
-      
+      // Tarefa movida para um novo status
+      task.status = status.title; // Atualiza o status da tarefa
+      console.log('Movendo tarefa para novo status:', task);
+
+      // Atualiza a tarefa no back-end com o novo status
       this.taskService.updateTask(task).subscribe(() => {
-        console.log('Tarefa atualizada no backend com sucesso');
+        // Mover tarefa da lista anterior para a nova lista
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex
         );
-        this.updateTaskOrder(event.container.data); // Atualiza a ordem das tarefas no novo status
+
+        // Atualizar a ordem das tarefas no novo status
+        this.updateTaskOrder(event.container.data);
+
+        console.log('Tarefa movida e atualizada com sucesso');
       }, error => {
-        console.error('Erro ao atualizar a tarefa no backend:', error);
+        console.error('Erro ao atualizar a tarefa:', error);
       });
     }
-  }
-  
-  onDropStatus(event: CdkDragDrop<Status[]>): void {
-  
-    if (event.previousIndex === event.currentIndex) {
-      return;
-    }
-  
-    moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
-  
-    this.statuses.forEach((status, index) => {
-      status.order = index;
-    });
-  
-    this.updateStatusOrder();
   }
 
   updateTaskOrder(tasks: Task[]): void {
     tasks.forEach((task, index) => {
-      task.order = index + 1; // Atualiza a ordem baseada na posição no array
-      
-      // Atualiza a tarefa no backend
+      task.order = index; // Atualiza a ordem da tarefa com base em sua nova posição
+
+      // Envia a atualização da ordem para o back-end
       this.taskService.updateTask(task).subscribe(
         () => {
-          // console.log(`Tarefa ${task.id} atualizada com a nova ordem ${task.order}`);
+          console.log(`Tarefa ${task.id} atualizada com a nova ordem ${task.order}`);
         },
         error => {
           console.error('Erro ao atualizar a ordem da tarefa:', error);
@@ -271,19 +258,37 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  updateStatusOrder() {
+  // Função para mover um status para a esquerda
+  moveStatusLeft(index: number): void {
+    if (index > 0) {
+      const temp = this.statuses[index - 1];
+      this.statuses[index - 1] = this.statuses[index];
+      this.statuses[index] = temp;
 
-    this.statuses.forEach((status) => {
-      const updatedStatus = { ...status };
-  
-      this.http.put(`http://localhost:3000/status/${status.id}`, updatedStatus).subscribe(
-        () => {
-          console.log(`Status ID ${status.id} updated successfully`);
-        },
-        (error) => {
-          console.error('Error updating status order:', error);
-        }
-      );
+      // Atualiza a ordem no back-end após a mudança
+      this.updateStatusOrder();
+    }
+  }
+
+  // Função para mover um status para a direita
+  moveStatusRight(index: number): void {
+    if (index < this.statuses.length - 1) {
+      const temp = this.statuses[index + 1];
+      this.statuses[index + 1] = this.statuses[index];
+      this.statuses[index] = temp;
+
+      // Atualiza a ordem no back-end após a mudança
+      this.updateStatusOrder();
+    }
+  }
+
+  // Função para atualizar a ordem dos status no back-end
+  updateStatusOrder(): void {
+    this.statuses.forEach((status, index) => {
+      status.order = index; // Atualiza a nova ordem localmente
+      this.statusService.updateStatus(status).subscribe(() => {
+        console.log(`Status ${status.title} atualizado para a nova posição ${status.order}`);
+      });
     });
   }
 }

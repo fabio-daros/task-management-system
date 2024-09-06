@@ -1,3 +1,4 @@
+/* Estilos da Página Vazia */
 .empty-background {
     display: flex;
     justify-content: center;
@@ -7,12 +8,13 @@
 
 .empty-background img {
     margin-top: 50px;
-    width: 65%; 
+    width: 65%;
     height: auto;
     opacity: 0.3;
     user-select: none;
 }
 
+/* Estilos da Sidebar (Menu lateral) */
 .sidebar {
     background-color: #51328a;
     padding: 20px;
@@ -31,20 +33,20 @@
     cursor: pointer;
 }
 
-.sidebar ~ .content {
-    margin-left: 40px;
-    margin-right: -10px;
-}
-
 .sidebar.open {
     left: 0;
 }
 
-.sidebar.open~.content {
-    margin-left: 230px;
+.sidebar~.content {
+    margin-left: 40px;
     margin-right: -10px;
 }
 
+.sidebar.open~.content {
+    margin-left: 230px;
+}
+
+/* Botão de alternância do menu */
 .toggle-menu {
     position: fixed;
     cursor: pointer;
@@ -75,7 +77,6 @@
     0% {
         opacity: 0;
     }
-
     100% {
         opacity: 1;
     }
@@ -86,6 +87,7 @@
     color: #e82c88;
 }
 
+/* Estilos da lista */
 ul {
     list-style-type: none;
     padding: 0;
@@ -109,16 +111,86 @@ ul a:hover {
     color: #e82c88;
 }
 
+.task-search-container {
+    color: white;
+    margin-left: -14px;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+
+}
+
+.task-search-container input {
+    width: 80%; /* O campo de busca ocupa toda a largura do contêiner */
+    padding: 10px;
+    border-radius: 6px; /* Bordas arredondadas no campo de busca */
+    border: 1px solid #ccc; /* Borda leve */
+    font-size: 14px;
+
+
+    outline: none; /* Remove a linha de foco */
+    transition: box-shadow 0.3s ease; /* Efeito suave ao interagir */
+}
+
+.task-search-container input:focus {
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Sombra ao focar */
+}
+
+/* Resultados da busca */
+.search-results {
+    margin-top: 2px;
+    background-color: #fff;
+    border-radius: 6px;
+    width: 80%;
+    overflow-y: auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results li {
+    padding: 10px;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.search-results li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Conteúdo Principal */
 .content {
     display: flex;
     flex-wrap: nowrap;
     margin-left: 100px;
     padding: 30px;
     color: #333;
-    transition: margin-left 1.6s ease ;
+    transition: margin-left 1.6s ease;
     overflow-x: hidden;
 }
 
+.content h2 {
+    color: #888888;
+    font-size: 17px;
+}
+
+.content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.content li {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Dropdown de status */
 .dropdown i {
     cursor: pointer;
     display: inline-block;
@@ -151,6 +223,15 @@ ul a:hover {
     color: white;
 }
 
+/* Status e Tasks */
+.status-container {
+    margin-top: 70px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    transition: all 0.6s ease;
+}
+
 .status {
     flex: 0 1 calc(33.333% - 20px);
     min-width: 200px;
@@ -162,62 +243,6 @@ ul a:hover {
     display: inline-block;
     flex-direction: column;
     transition: transform 0.6s ease, background-color 0.6s ease, border-color 0.6s ease;
-}
-
-@media (max-width: 600px) {
-    .sidebar {
-        float: none;
-        width: 100%;
-        position: relative;
-        left: 0;
-    }
-
-    .content {
-        flex-direction: column;
-        margin-left: 0;
-    }
-
-    .status {
-        min-width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-}
-
-.content h2 {
-    color: #888888;
-    font-size: 17px;
-}
-
-.content ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.content li {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-@media (max-width: 600px) {
-    .sidebar {
-        float: none;
-        width: 100%;
-        position: relative;
-    }
-
-    .content {
-        grid-template-columns: 1fr;
-        margin-left: 0;
-    }
-
-    .content h2 {
-        font-size: 12px;
-    }
-
-    .content li {
-        font-size: 10px;
-    }
 }
 
 .status-header {
@@ -244,76 +269,38 @@ ul a:hover {
 }
 
 .status-container {
-    margin-top: 70px;
     display: flex;
     flex-wrap: nowrap;
+    flex: 3;
     overflow-x: auto;
-    transition: all 0.6s ease;
 }
 
-.status-item {
-    padding: 16px;
-    border: 1px solid #ccc;
+.status-move-arrows {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 8px;
-    background: #fff;
+    padding: 0 10px;
 }
 
-.cdk-drag {
-    cursor: move;
+.status-move-arrows button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
     color: #888888;
-    font-size: 14px;
+    margin: 0 19px;
 }
 
-.dragging {
-    background-color: #f0f0f0;
-    border: 2px dashed #ccc;
-    opacity: 0.8;
-    transform: scale(1.05);
-    font-size: 17px;
+.status-move-arrows button:hover {
+    color: #e82c88;
+    transform: scale(1.2);
+    transition: all 0.2s ease;
 }
 
-.cdk-drop-list-dragging .status {
-    transition: border 0.6s ease;
-    border: 2px solid transparent;
+.status-move-arrows button.invisible {
+    visibility: hidden;
 }
 
-.cdk-drop-list-dragging .status:not(.cdk-drag-placeholder) {
-    transition: transform 0.6s ease;
-}
-
-@media (max-width: 600px) {
-    .status-container {
-        flex-direction: column;
-    }
-
-    .status {
-        flex: 1 0 auto;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-}
-
-.tooltip {
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    top: 35px;
-    background-color: #888888;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
-    transform: translateY(10px);
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    z-index: 1000;
-}
-
-
-.status-header h2:hover+.tooltip {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 .card {
     background-color: #ffffff;
@@ -337,6 +324,8 @@ ul a:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
+
+/* Botões de edição e exclusão de tarefas */
 .edit-task-button,
 .delete-task-button {
     color: #888888;
@@ -366,6 +355,7 @@ ul a:hover {
     color: #e82c88;
 }
 
+/* Estilos do dono e situação das tarefas */
 .card-owner,
 .card-situation {
     color: #888888;
@@ -396,57 +386,29 @@ ul a:hover {
     align-items: center;
 }
 
-.task-search-container {
-    position: fixed; /* Fixa o campo de pesquisa no topo da página */
-    top: 40px; /* Ajuste a distância do topo conforme necessário */
-    left: 430px; /* Centraliza horizontalmente */
-    transform: translateX(-50%); /* Ajuste para garantir centralização */
-    z-index: 2; /* Garante que o campo de pesquisa fique acima dos outros elementos */
-    background-color: #fff; /* Cor de fundo para contraste */
-
-
+/* Tooltip */
+.tooltip {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    background-color: #888888;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
 }
 
-.task-search-container input {
-    width: 300px; /* Largura do campo de pesquisa */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 4px; /* Bordas arredondadas */
-    border: 1px solid #ccc; /* Borda */
-    font-size: 16px; /* Tamanho da fonte */
+.status-header h2:hover+.tooltip {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.search-results {
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
-    position: fixed;
-    top: 40px;
-    left: 47%;
-    transform: translateX(-50%);
-    z-index: 2;
-    width: 300px;
-}
-
-.search-results ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.search-results li {
-    color: #888888;
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-}
-
-.search-results li:hover {
-    background-color: #f0f0f0;
-}
-
+/* Estilos do Footer */
 .footer {
     background-color: #f2f2f2;
     padding: 10px;
@@ -458,10 +420,6 @@ ul a:hover {
     margin-top: 100px;
 }
 
-.footer {
-    height: 40px;
-}
-
 .footer a {
     color: #51328a;
     font-size: 14px;
@@ -471,4 +429,43 @@ ul a:hover {
     font-size: 12px;
     color: #e82c88;
     text-decoration: none;
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+    .sidebar {
+        float: none;
+        width: 100%;
+        position: relative;
+        left: 0;
+    }
+
+    .content {
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    .status {
+        min-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .status-container {
+        flex-direction: column;
+    }
+
+    .status {
+        flex: 1 0 auto;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .content h2 {
+        font-size: 12px;
+    }
+
+    .content li {
+        font-size: 10px;
+    }
 }

@@ -6,50 +6,38 @@
   <h2>Menu</h2>
   <ul>
     <li>
+      <div class="task-search-container">
+        <input type="text" placeholder="Locate tasks..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+        <div class="search-results" *ngIf="filteredTasks.length > 0">
+          <ul>
+            <li *ngFor="let task of filteredTasks" (click)="openTaskItem(task.id)">
+              {{ task.title }}
+            </li>
+          </ul>
+        </div>
+      </div>
       <a (click)="openModalStatus($event)">
         <i class="bi bi-columns"></i> Status
       </a>
       <a (click)="openModalTeam($event)">
         <i class="bi bi-people"></i> Team
       </a>
-      <a [routerLink]="['/dashboard']" >
+      <a [routerLink]="['/dashboard']">
         <i class="bi bi-speedometer2"></i> Dashboard
       </a>
+
     </li>
   </ul>
 </aside>
 
 <main class="content" [ngClass]="{'empty': statuses.length === 0 && tasks.length === 0}">
-  <div *ngIf="statuses.length === 0 && tasks.length === 0" class="empty-background">
-    <img src="assets/background/cactus.png" alt="Cactus">
-  </div>
-  
-<!-- Search Field -->
-<div *ngIf="statuses.length > 0" class="task-search-container">
-  <input type="text" placeholder="Locate tasks..." [(ngModel)]="searchTerm" (input)="onSearch()" />
 
-  <div class="search-results" *ngIf="filteredTasks.length > 0">
-
-    <ul>
-      <li *ngFor="let task of filteredTasks" (click)="openTaskItem(task.id)">
-        {{ task.title }}
-      </li>
-    </ul>
-  </div>
-</div>
-
-
-  <!-- Status Container-->
-  <div cdkDropList (cdkDropListDropped)="onDropStatus($event)" [cdkDropListData]="statuses" class="status-container"
-    cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="statusIds">
-
-    <section *ngFor="let status of statuses" class="status" cdkDrag cdkDropList
-    [cdkDropListConnectedTo]="statusIds"
-      [cdkDropListData]="getTasksByStatus(status.title)" [class.dragging]="draggingStatusId === status.id"
-      (cdkDropListDropped)="onDropTask($event, status)" [ngClass]="{'dragging': draggingStatusId === status.id}"
-      [ngClass]="{'dragging': draggingStatusId === status.id}"
-      (cdkDragStarted)="draggingStatusId = status.id" (cdkDragEnded)="draggingStatusId = null">
-
+  <!-- Status Container (drag-and-drop para tasks) -->
+  <div class="status-container" cdkDropListGroup>
+    <section *ngFor="let status of statuses; let i = index" class="status" cdkDropList
+      [cdkDropListData]="getTasksByStatus(status.title)" [cdkDropListConnectedTo]="statusIds"
+      (cdkDropListDropped)="onDropTask($event, status)">
+      <!-- Cabeçalho do Status com Setas -->
       <header class="status-header">
         <div class="dropdown">
           <i class="bi bi-three-dots" (click)="toggleStatusMenu(status.id)"></i>
@@ -64,9 +52,16 @@
         <div *ngIf="hoveredDescription === status.description" class="tooltip">
           {{ status.description }}
         </div>
+        <!-- Setas para mover os status -->
+        <div class="status-move-arrows">
+          <button [ngClass]="{'invisible': i === 0}" (click)="moveStatusLeft(i)">←</button>
+          <button [ngClass]="{'invisible': i === statuses.length - 1}" (click)="moveStatusRight(i)">→</button>
+        </div>
         <input class="newTask" type="text" placeholder="Add new action" [(ngModel)]="newTaskTitles[status.title]"
           (keyup.enter)="addTask(newTaskTitles[status.title], status)">
       </header>
+
+      <!-- Lista de Tasks (dentro de cada status) -->
       <ul>
         <li class="card" *ngFor="let task of getTasksByStatus(status.title)"
           [ngStyle]="{'border-left': '8px solid ' + status.color}" cdkDrag [cdkDragData]="task">
@@ -92,7 +87,10 @@
         </li>
       </ul>
     </section>
+  </div>
 
+  <div *ngIf="statuses.length === 0 && tasks.length === 0" class="empty-background">
+    <img src="assets/background/cactus.png" alt="Cactus">
   </div>
 </main>
 
