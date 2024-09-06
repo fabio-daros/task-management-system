@@ -77,6 +77,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -111,6 +112,29 @@ ul a:hover {
     color: #e82c88;
 }
 
+.skeleton-task {
+    background-color: #e0e0e0;
+    height: 40px;
+    margin: 10px 0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #e0e0e0;
+    }
+
+    50% {
+        background-color: #f0f0f0;
+    }
+
+    100% {
+        background-color: #e0e0e0;
+    }
+}
+
+
 .task-search-container {
     color: white;
     margin-left: -14px;
@@ -121,22 +145,21 @@ ul a:hover {
 }
 
 .task-search-container input {
-    width: 80%; /* O campo de busca ocupa toda a largura do contêiner */
+    width: 80%;
     padding: 10px;
-    border-radius: 6px; /* Bordas arredondadas no campo de busca */
-    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 6px;
+    border: 1px solid #ccc;
     font-size: 14px;
 
 
-    outline: none; /* Remove a linha de foco */
-    transition: box-shadow 0.3s ease; /* Efeito suave ao interagir */
+    outline: none;
+    transition: box-shadow 0.3s ease;
 }
 
 .task-search-container input:focus {
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Sombra ao focar */
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Resultados da busca */
 .search-results {
     margin-top: 2px;
     background-color: #fff;
@@ -164,7 +187,7 @@ ul a:hover {
     background-color: #f0f0f0;
 }
 
-/* Conteúdo Principal */
+
 .content {
     display: flex;
     flex-wrap: nowrap;
@@ -190,7 +213,6 @@ ul a:hover {
     color: #333;
 }
 
-/* Dropdown de status */
 .dropdown i {
     cursor: pointer;
     display: inline-block;
@@ -223,7 +245,7 @@ ul a:hover {
     color: white;
 }
 
-/* Status e Tasks */
+
 .status-container {
     margin-top: 70px;
     display: flex;
@@ -325,7 +347,6 @@ ul a:hover {
     transform: translateY(-2px);
 }
 
-/* Botões de edição e exclusão de tarefas */
 .edit-task-button,
 .delete-task-button {
     color: #888888;
@@ -355,7 +376,6 @@ ul a:hover {
     color: #e82c88;
 }
 
-/* Estilos do dono e situação das tarefas */
 .card-owner,
 .card-situation {
     color: #888888;
@@ -408,7 +428,6 @@ ul a:hover {
     transform: translateY(0);
 }
 
-/* Estilos do Footer */
 .footer {
     background-color: #f2f2f2;
     padding: 10px;
@@ -431,7 +450,6 @@ ul a:hover {
     text-decoration: none;
 }
 
-/* Estilos responsivos */
 @media (max-width: 600px) {
     .sidebar {
         float: none;

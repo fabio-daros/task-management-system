@@ -40,7 +40,7 @@ export class StatusManagerComponent {
     }
 
     if (status.id) {
-      this.http.put(`http://localhost:3000/status/${status.id}`, status).subscribe(
+      this.http.put(`https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/status/${status.id}`, status).subscribe(
         response => {
           console.log('Status updated successfully:', response);
           this.dialogRef.close(true);
@@ -51,7 +51,7 @@ export class StatusManagerComponent {
         }
       );
     } else {
-      this.http.post('http://localhost:3000/status', status).subscribe(
+      this.http.post('https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/status', status).subscribe(
         response => {
           console.log('Status created successfully:', response);
           this.dialogRef.close(true);

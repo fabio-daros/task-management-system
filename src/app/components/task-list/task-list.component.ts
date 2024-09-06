@@ -44,6 +44,13 @@ export class TaskListComponent implements OnInit {
     this.loadTasksAndTeams();
   }
 
+  // Método que faltava, adicionando ele aqui:
+  loadTasks(): void {
+    this.taskService.getTasks().subscribe(tasks => {
+      this.tasks = tasks;
+    });
+  }
+
   loadTasksAndTeams(): void {
     this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
@@ -91,7 +98,6 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-
   loadStatuses() {
     this.statusService.getStatuses().subscribe(statuses => {
       this.statuses = statuses.sort((a, b) => a.order - b.order);
@@ -99,15 +105,32 @@ export class TaskListComponent implements OnInit {
   }
 
   editStatus(status: Status) {
+    const oldStatusTitle = status.title; // Guardar o título antigo do status
+    
     const dialogRef = this.dialog.open(StatusManagerComponent, {
       width: '500px',
       data: { status }
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadStatuses();
-        this.loadTasks();
+        const newStatusTitle = result.title; // Novo título do status após edição
+        
+        // Atualiza o status no back-end
+        this.statusService.updateStatus(result).subscribe(() => {
+          // Atualiza todas as tasks que têm o status antigo
+          const tasksToUpdate = this.tasks.filter(task => task.status === oldStatusTitle);
+          
+          tasksToUpdate.forEach(task => {
+            task.status = newStatusTitle; // Atualiza o status da task com o novo título
+          });
+  
+          // Envia todas as tasks atualizadas para o backend
+          this.taskService.updateMultipleTasks(tasksToUpdate).subscribe(() => {
+            this.loadStatuses(); // Recarrega os statuses
+            this.loadTasks(); // Recarrega as tasks para refletir as alterações
+          });
+        });
       }
     });
   }
@@ -138,12 +161,6 @@ export class TaskListComponent implements OnInit {
 
   toggleStatusMenu(statusTitle: string) {
     this.activeStatusMenu = this.activeStatusMenu === statusTitle ? null : statusTitle;
-  }
-
-  loadTasks(): void {
-    this.taskService.getTasks().subscribe(tasks => {
-      this.tasks = tasks;
-    });
   }
 
   getTasksByStatus(statusTitle: string): Task[] {
@@ -212,30 +229,19 @@ export class TaskListComponent implements OnInit {
   onDropTask(event: CdkDragDrop<Task[]>, status: Status): void {
     const task = event.item.data as Task;
 
-    // Verifica se a tarefa foi movida dentro do mesmo status ou para um novo status
     if (event.previousContainer === event.container) {
-      // Tarefa movida dentro do mesmo status
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updateTaskOrder(event.container.data); // Atualiza a ordem das tarefas no status
+      this.updateTaskOrder(event.container.data);
     } else {
-      // Tarefa movida para um novo status
-      task.status = status.title; // Atualiza o status da tarefa
-      console.log('Movendo tarefa para novo status:', task);
-
-      // Atualiza a tarefa no back-end com o novo status
+      task.status = status.title;
       this.taskService.updateTask(task).subscribe(() => {
-        // Mover tarefa da lista anterior para a nova lista
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex
         );
-
-        // Atualizar a ordem das tarefas no novo status
         this.updateTaskOrder(event.container.data);
-
-        console.log('Tarefa movida e atualizada com sucesso');
       }, error => {
         console.error('Erro ao atualizar a tarefa:', error);
       });
@@ -244,9 +250,7 @@ export class TaskListComponent implements OnInit {
 
   updateTaskOrder(tasks: Task[]): void {
     tasks.forEach((task, index) => {
-      task.order = index; // Atualiza a ordem da tarefa com base em sua nova posição
-
-      // Envia a atualização da ordem para o back-end
+      task.order = index;
       this.taskService.updateTask(task).subscribe(
         () => {
           console.log(`Tarefa ${task.id} atualizada com a nova ordem ${task.order}`);
@@ -258,34 +262,27 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  // Função para mover um status para a esquerda
   moveStatusLeft(index: number): void {
     if (index > 0) {
       const temp = this.statuses[index - 1];
       this.statuses[index - 1] = this.statuses[index];
       this.statuses[index] = temp;
-
-      // Atualiza a ordem no back-end após a mudança
       this.updateStatusOrder();
     }
   }
 
-  // Função para mover um status para a direita
   moveStatusRight(index: number): void {
     if (index < this.statuses.length - 1) {
       const temp = this.statuses[index + 1];
       this.statuses[index + 1] = this.statuses[index];
       this.statuses[index] = temp;
-
-      // Atualiza a ordem no back-end após a mudança
       this.updateStatusOrder();
     }
   }
 
-  // Função para atualizar a ordem dos status no back-end
   updateStatusOrder(): void {
     this.statuses.forEach((status, index) => {
-      status.order = index; // Atualiza a nova ordem localmente
+      status.order = index;
       this.statusService.updateStatus(status).subscribe(() => {
         console.log(`Status ${status.title} atualizado para a nova posição ${status.order}`);
       });

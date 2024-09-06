@@ -1,83 +1,17 @@
 {
   "status": [
     {
-      "id": "c0df",
-      "color": "#3a5e98",
-      "title": "To Do",
-      "description": "To Do List.",
-      "order": 1
-    },
-    {
-      "id": "08b5",
-      "color": "#dbd648",
-      "title": "In Progress",
-      "description": "In Progress List.",
-      "order": 2
-    },
-    {
-      "id": "744b",
-      "color": "#2a792c",
-      "title": "Done",
-      "description": "Done List.",
-      "order": 3
-    },
-    {
-      "id": "9ff8",
-      "color": "#b71f1f",
-      "title": "backlog",
-      "description": "Backlog List",
-      "order": 0
-    },
-    {
-      "id": "39d1",
-      "color": "#8b7113",
-      "title": "New Status",
-      "description": "New Status",
-      "order": 4
-    },
-    {
-      "id": "1fbd",
-      "color": "#24abae",
-      "title": "New status 2",
-      "description": "New Status 2",
-      "order": 5
+      "id": "df59",
+      "color": "#4f2727",
+      "title": "To Do 1 2",
+      "description": "To Do List"
     }
   ],
   "task": [
     {
-      "id": "1415",
+      "id": "676c",
       "title": "Task 1",
-      "status": "New status 2",
-      "teamId": "",
-      "situation": "",
-      "description": "",
-      "statusColor": "",
-      "order": 1
-    },
-    {
-      "id": "05a9",
-      "title": "Task 2",
-      "status": "New Status",
-      "teamId": "",
-      "situation": "",
-      "description": "",
-      "statusColor": "",
-      "order": 0
-    },
-    {
-      "id": "e38f",
-      "title": "Task 3",
-      "status": "Done",
-      "teamId": "",
-      "situation": "",
-      "description": "",
-      "statusColor": "",
-      "order": 1
-    },
-    {
-      "id": "97e6",
-      "title": "Task 4",
-      "status": "To Do",
+      "status": "To Do 1 2",
       "teamId": "",
       "situation": "",
       "description": "",

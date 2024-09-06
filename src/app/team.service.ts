@@ -12,7 +12,7 @@ export interface Team {
   providedIn: 'root'
 })
 export class TeamService {
-  private apiUrl = 'http://localhost:3000/team';
+  private apiUrl = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/team';
 
   constructor(private http: HttpClient) {}
 

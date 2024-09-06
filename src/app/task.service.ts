@@ -31,9 +31,9 @@ export interface Status {
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/task';
-  private teamApiUrl = 'http://localhost:3000/team';
-  private statusApiUrl = 'http://localhost:3000/status';
+  private apiUrl = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/task';
+  private teamApiUrl = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/team';
+  private statusApiUrl = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/status';
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
 
@@ -65,7 +65,11 @@ export class TaskService {
   }
 
   updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`http://localhost:3000/task/${task.id}`, task);
+    return this.http.put<Task>(`https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/task/${task.id}`, task);
+  }
+  
+  updateMultipleTasks(tasks: Task[]): Observable<Task[]> {
+    return forkJoin(tasks.map(task => this.updateTask(task)));
   }
 
   deleteTask(id: string): Observable<void> {
