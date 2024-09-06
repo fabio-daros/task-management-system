@@ -7,9 +7,9 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrlStatus = 'http://localhost:3000/status';
-  private apiUrlTasks = 'http://localhost:3000/task';
-  private apiUrlTeam = 'http://localhost:3000/team';
+  private apiUrlStatus = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/status';
+  private apiUrlTasks = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/task';
+  private apiUrlTeam = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/team';
 
   constructor(private http: HttpClient) {}
 
