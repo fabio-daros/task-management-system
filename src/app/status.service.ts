@@ -14,7 +14,7 @@ export interface Status {
   providedIn: 'root'
 })
 export class StatusService {
-  private apiUrl = 'http://localhost:3000/status';
+  private apiUrl = 'https://vht4zycyqk.execute-api.us-east-1.amazonaws.com/status';
   private statusesSubject = new BehaviorSubject<Status[]>([]);
   statuses$ = this.statusesSubject.asObservable();
 
