@@ -1,40 +1,5 @@
 {
-  "status": [
-    {
-      "id": "df59",
-      "color": "#4f2727",
-      "title": "To Do 1 2",
-      "description": "To Do List"
-    }
-  ],
-  "task": [
-    {
-      "id": "676c",
-      "title": "Task 1",
-      "status": "To Do 1 2",
-      "teamId": "",
-      "situation": "",
-      "description": "",
-      "statusColor": "",
-      "order": 0
-    }
-  ],
-  "team": [
-    {
-      "id": "3e9b",
-      "name": "John Deere"
-    },
-    {
-      "id": "604tu",
-      "name": "Massey Ferguson"
-    },
-    {
-      "id": "1r3ph",
-      "name": "Kubota James"
-    },
-    {
-      "id": "mbbjs",
-      "name": "Cropilots Jersey"
-    }
-  ]
+  "status": [],
+  "task": [],
+  "team": []
 }
